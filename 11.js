@@ -14,23 +14,40 @@ http.createServer( function (request, response) {
   // affiche le nom du fichier pour laquelle la requête a été généré
    console.log("Request for " + pathname + " received.");
    
-
+   
    // Lire par le «fs» (file système) le fichier de la requête 
    // le slice(1) permet de retirer le premier caractère
-   fs.readFile(pathname.slice(1)+".js", function (err, data) {
+
+   var obj;
+   fs.readFile(pathname.slice(1)+".json", function (err, data) {
+      var fName = pathname.slice(1);
       if (err) {
          console.log(err);
          // HTTP Status: 404 : NOT FOUND
          // Content Type: text/plain
          response.writeHead(404, {'Content-Type': 'text/html ; charset=utf-8'});
       }else { 
+         obj = JSON.parse(data);
+         function genererTab(obj){
+
+            var sChaine = "";
+
+            sChaine += "<h1>Tableau de " + fName +"</h1>";
+            sChaine += "<table>";
+            for (fName in obj){
+               sChaine += "<tr><td>" + fName + "</td><td>" + obj[fName].toString() + "</td></tr>";
+            }
+            sChaine += "</table>";
+
+            return sChaine;
+         }
          //Page found   
          // HTTP Status: 200 : OK
          // Content Type: text/plain
          response.writeHead(200, {'Content-Type': 'text/html ; charset=utf-8'});  
          
          // affiche le contenu du fichier dans la page HTML
-         response.write(data.toString());   
+         response.write(genererTab(obj));   
       }
       // transmet la reponse  
       response.end();
