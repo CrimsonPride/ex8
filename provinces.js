@@ -24,12 +24,7 @@ function genererTab(obj, lieu){
 	return sChaine;
 }
 
-http.createServer(function(request, response) {
-  response.writeHead(200, {"Content-Type": "text/html; charset=utf8"});	
-  response.write(genererTab(objProvince,province));	
-
-  response.end(); 
-}).listen(8888);
+genererTab(objProvince,provinces);
 
 
 

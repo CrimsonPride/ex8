@@ -17,7 +17,7 @@ http.createServer( function (request, response) {
 
    // Lire par le «fs» (file système) le fichier de la requête 
    // le slice(1) permet de retirer le premier caractère
-   fs.readFile(pathname.slice(1), function (err, data) {
+   fs.readFile(pathname.slice(1)+".js", function (err, data) {
       if (err) {
          console.log(err);
          // HTTP Status: 404 : NOT FOUND
